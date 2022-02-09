@@ -39,6 +39,7 @@ module "eks" {
   cluster_version                 = "1.21"
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
+  enable_irsa                     = true #Sets up OIDC provider for EKS
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = concat(module.vpc.public_subnets, module.vpc.private_subnets)
@@ -166,7 +167,3 @@ resource "local_file" "kubeconfig" {
     }
   )
 }
-
-#output "kubeconfig" {
-#  value = "${local.kubeconfig}"
-#}
